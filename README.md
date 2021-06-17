@@ -1,5 +1,5 @@
 ## Introduction
-The purpose of this project is to build a tool using Nvidia Jetson Nano that can play the 24 game. In a 24 game, four cards are placed on the ground facing up and players need to think of an arithmetic way using all four cards in order to reach 24. The allowed operation are just plus, minus, multiplication and division. Unary operation is not allowed. For example, if the four cards are 1,2,3,4, then (1+2+3)*4 would be an acceptable solution. The fastest player wins the game. 
+The purpose of this project is to build a tool using NVIDIA Jetson Nano that can play the 24 game. In a 24 game, four cards are placed on the ground facing up and players need to think of an arithmetic way using all four cards in order to reach 24. The allowed operation are just plus, minus, multiplication and division. Unary operation is not allowed. For example, if the four cards are 1,2,3,4, then (1+2+3)*4 would be an acceptable solution. The fastest player wins the game. 
 
 This project contains two main part. In the first part, an objection detection tool will be built to detect and classify the cards seen by the camera. In the second part, if there are four cards detected, then an algorithm will determine if any operation exists to reach 24. The first such solution will be the output.  
 
@@ -9,9 +9,9 @@ This project depends on NVIDIA Jetson as the base hardware, so I would recommend
 ## Collecting and labelling card images
 One way to collect and label card images at once is to continue using the tool provided by the Hello AI World tutorial. If you have never used that tool, I strongly suggest trying at least a couple images. However, one disadvantage is it is hard to modify the resulting .xml files. This makes it difficult to validate labels or to fine tune those bounding boxes previously drawn. 
 
-I ended up separating the collection process and the labelling process. For image collection I used both a Logitech C270 720p webcam and an iPhone 12 Pro. Around 80% of the picture are taken by the webcam at my computer desk and the rest 20% are taken at different locations around the house with diverse background. In Linux, the image capture software I used is Cheese. When taking picture using iPhone, I suggest changing the format from "High Efficiency" (default) to "Most Compatible", otherwise you will need to find a way to convert those .HEIC images to .JPG. After capturing images, I transferred photos to Google Drive and then downloaded to my desktop.
+I ended up separating the collection process and the labelling process. For image collection I used both a Logitech C270 720p webcam and an iPhone 12 Pro. Around 80% of the picture are taken by the webcam at my computer desk and the rest 20% are taken at different locations around the house with diverse background. In Linux, the image capture software I used is Cheese. When taking picture using iPhone, I suggest changing the format from **High Efficiency** (default) to **Most Compatible**, otherwise you will need to find a way to convert those .HEIC images to `.JPG`. After capturing images, I transferred photos to Google Drive and then downloaded to my desktop.
 
-Couple other points to keep in mind are the image size, resolution and orientation. The original images captured by the webcam are 1280*720 with a size ranging from 30 to 130 kb. The original images from iPhone have higher resolution, greater size, different aspect ratio and unknown orientation, depending on your pose when taking the picture. To deal with these discrepancy, in the iPhone camera App, please make sure aspect ratio is set to 16:9 instead of 4:3. I also processed iPhone images via a python script (`process_img.py`) so that they have comparable size and resolution.
+Couple other points to keep in mind are the image size, resolution and orientation. The original images captured by the webcam are 1280*720 with a size ranging from 30 to 130 KB. The original images from iPhone have higher resolution, greater size, different aspect ratio and unknown orientation, depending on your pose when taking the picture. To deal with these discrepancy, in the iPhone camera App, please make sure aspect ratio is set to 16:9 instead of 4:3. I also processed iPhone images via a python script (`process_img.py`) so that they have comparable size and resolution.
 
 I used an open source software called [labelImg](https://github.com/tzutalin/labelImg) for labelling. When labelling, you need to determine what exactly is the object. I included all the non-white element on a card's surface as one single object.
 
@@ -73,7 +73,7 @@ Change directory to `ssd/`, which stands for "Single Shot Multibox Detecter".
 ```sh
 # cd python/training/detection/ssd/
 ```
-Take a look at models sub-directory by using `ls models/`. Any pretrained SSD model (xxx.pth) should be there. If not, you can download these from <https://github.com/qfgaohao/pytorch-ssd>. In this project, I used both Mobilenet V1 SSD as well as MobileNetV2 SSD-Lite.
+Take a look at models sub-directory by using `ls models/`. Any pretrained SSD model (xxx.pth) should be there. If not, you can download these from [here](https://github.com/qfgaohao/pytorch-ssd). In this project, I used both Mobilenet V1 SSD as well as MobileNetV2 SSD-Lite.
 
 If you follow the decription about card images data, you should have all your data ready at `data/cards/`. If you run `ls data/cards/`, you should see three folders, `Annotations/`, `JPEGImages/`, `ImageSets/`, and one text file `labels.txt`. 
 
