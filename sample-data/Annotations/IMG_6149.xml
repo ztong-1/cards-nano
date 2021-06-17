@@ -1,0 +1,26 @@
+<annotation>
+	<folder>JPEGImages</folder>
+	<filename>IMG_6149.JPG</filename>
+	<path>/home/zhentao/Documents/cards-nano/sample-data/JPEGImages/IMG_6149.JPG</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1280</width>
+		<height>720</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>eight</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>535</xmin>
+			<ymin>210</ymin>
+			<xmax>870</xmax>
+			<ymax>612</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>JPEGImages</folder>
+	<filename>IMG_6227.JPG</filename>
+	<path>/home/zhentao/Documents/cards-nano/sample-data/JPEGImages/IMG_6227.JPG</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1280</width>
+		<height>720</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>nine</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>437</xmin>
+			<ymin>308</ymin>
+			<xmax>942</xmax>
+			<ymax>623</ymax>
+		</bndbox>
+	</object>
+</annotation>

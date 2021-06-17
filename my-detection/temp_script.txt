@@ -1,0 +1,3 @@
+docker/run.sh --volume ~/my-detection:/my-detection
+
+python3 /my-detection/my-detection.py --model=./python/training/detection/ssd/models/cards/mb2-ssd-lite.onnx --labels=./python/training/detection/ssd/models/cards/labels.txt --input-blob=input_0 --output-cvg=scores --output-bbox=boxes --threshold=0.5
