@@ -4,7 +4,7 @@ The purpose of this project is to build a tool using Nvidia Jetson Nano that can
 This project contains two main part. In the first part, an objection detection tool will be built to detect and classify the cards seen by the camera. In the second part, if there are four cards detected, then an algorithm will determine if any operation exists to reach 24. The first such solution will be the output.  
 
 ## Prerequisite
-This project depends on Nvidia Jetson as the base hardware, so I would recommend completing Nvidia Jetson Hello AI World tutorial, especially the detection section, in order to be comfortable with understanding the rest.
+This project depends on NVIDIA Jetson as the base hardware, so I would recommend completing NVIDIA Jetson Hello AI World tutorial, especially the detection section, in order to be comfortable with understanding the rest.
 
 ## Collecting and labelling card images
 One way to collect and label card images at once is to continue using the tool provided by the Hello AI World tutorial. If you have never used that tool, I strongly suggest trying at least a couple images. However, one disadvantage is it is hard to modify the resulting .xml files. This makes it difficult to validate labels or to fine tune those bounding boxes previously drawn. 
@@ -13,7 +13,7 @@ I ended up separating the collection process and the labelling process. For imag
 
 Couple other points to keep in mind are the image size, resolution and orientation. The original images captured by the webcam are 1280*720 with a size ranging from 30 to 130 kb. The original images from iPhone have higher resolution, greater size, different aspect ratio and unknown orientation, depending on your pose when taking the picture. To deal with these discrepancy, in the iPhone camera App, please make sure aspect ratio is set to 16:9 instead of 4:3. I also processed iPhone images via a python script (`process_img.py`) so that they have comparable size and resolution.
 
-I used an open source software called labelImg for labelling: <https://github.com/tzutalin/labelImg>. When labelling, you need to determine what exactly is the object. I included all the non-white element on a card's surface as one single object.
+I used an open source software called [labelImg](https://github.com/tzutalin/labelImg) for labelling. When labelling, you need to determine what exactly is the object. I included all the non-white element on a card's surface as one single object.
 
 I ended up with around 250 pictures from each category (Ace, 2-10). 
 
@@ -104,7 +104,7 @@ If the accuracy seems not acceptable, then please take more picture and re-train
 Detection accuracy depends on many factors, including model type, training sample size, number of epochs, precision of bounding box, picture quality, picture diversity, etc. My first attempt wasn't quite successful and the reason could be using SSD mobile-net version 1 and small sample size. The confidence of detected card were typically around 0.4 to 0.5 and some numbers can hardly be detected. After switching to SSD mobile-net version 2, the performance improved a lot. Confidence are usually above 0.85 and the model shows robustness for different card orientation. However, it still had difficulty distinguishing between 8 and 9, 5 and 6. So I increased the sample size a bit more and reached the final trained model.  
 
 ## 24 game implementation
-No machine learning knowledge is involved in implementing the 24 game. Leetcode has one problem on this game I actually started from there, <https://leetcode.com/problems/24-game/>. However, the coding challenge only require outputting whether the card combination has a solution or not. So I added a couple more lines of code so that it outputs actual arithmetic expression.
+No machine learning knowledge is involved in implementing the 24 game. Leetcode has one problem on this game I actually started from [there](https://leetcode.com/problems/24-game/). However, the coding challenge only require outputting whether the card combination has a solution or not. So I added a couple more lines of code so that it outputs actual arithmetic expression.
 
 ## Combine 24 game with object detection
 Finally, it is now time to crack the 24 game with some AI boost. In the Hello AI World tutorial, a folder called `my-detection/` was created at `Home` directory, and I will use that. Exit the current container by using the command `exit`.
