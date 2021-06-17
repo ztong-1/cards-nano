@@ -1,3 +1,5 @@
+:spades: :hearts: :diamonds: :clubs:
+
 ## Introduction
 The purpose of this project is to build a tool using NVIDIA Jetson Nano that can play the 24 game. In a 24 game, four cards are placed on the ground facing up and players need to think of an arithmetic way using all four cards in order to reach 24. The allowed operation are just plus, minus, multiplication and division. Unary operation is not allowed. For example, if the four cards are 1,2,3,4, then (1+2+3)*4 would be an acceptable solution. The fastest player wins the game. 
 
