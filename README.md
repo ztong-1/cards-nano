@@ -6,18 +6,18 @@ The purpose of this project is to build a tool using NVIDIA Jetson Nano that can
 This project contains two main part. In the first part, an objection detection tool will be built to detect and classify the cards seen by the camera. In the second part, if there are four cards detected, then an algorithm will determine if any operation exists to reach 24. The first such solution will be the output.  
 
 ## Prerequisite
-This project depends on NVIDIA Jetson as the base hardware, so I would recommend completing NVIDIA Jetson Hello AI World tutorial, especially the detection section, in order to be comfortable with understanding the rest.
+This project depends on NVIDIA Jetson as the base hardware, so I would recommend walking through the official NVIDIA Jetson [Hello AI World](https://github.com/dusty-nv/jetson-inference#api-reference) tutorial, especially the [DectNet](https://github.com/dusty-nv/jetson-inference/blob/master/docs/detectnet-console-2.md) section, in order to be comfortable with understanding the rest.
 
 ## Collecting and labelling card images
-One way to collect and label card images at once is to continue using the tool provided by the Hello AI World tutorial. If you have never used that tool, I strongly suggest trying at least a couple images. However, one disadvantage is it is hard to modify the resulting `.xml` files. This makes it difficult to validate labels or to fine tune those bounding boxes previously drawn. 
+One way to collect and label card images at once is to continue using the tool covered in the Hello AI World tutorial. If you have never used that tool, I strongly suggest trying at least a couple images. However, one disadvantage is it is hard to modify the resulting `.xml` files. This makes it difficult to validate labels or to fine touch previously drawn bounding boxes. 
 
-I ended up separating the collection process and the labelling process. For image collection I used both a Logitech C270 720p webcam and an iPhone 12 Pro. Around 80% of the picture are taken by the webcam at my computer desk and the rest 20% are taken at different locations around the house with diverse background. In Linux, the image capture software I used is [Cheese](https://help.gnome.org/users/cheese/stable/photo-take.html.en). When taking picture using iPhone, I suggest changing the format from **High Efficiency** (default) to **Most Compatible**, otherwise you will need to find a way to convert those `.HEIC` images to `.JPG`. After capturing images, I transferred photos to Google Drive and then downloaded to my desktop.
+I ended up separating the collection process and the labelling process. For image collection I used both a Logitech C270 720p webcam and an iPhone 12 Pro. Around 80% of the picture are taken by the webcam at my computer desk and the rest 20% are taken at different locations around the house with diverse background. In Linux, the image capture software I used is [Cheese](https://help.gnome.org/users/cheese/stable/photo-take.html.en). When taking picture using iPhone, I suggest changing the format from **High Efficiency** (default) to **Most Compatible**, otherwise you will need to find a way to convert those `.HEIC` images to `.JPG`. After capturing images, I transferred photos from iPhone to Google Drive and then downloaded to my desktop.
 
 Couple other points to keep in mind are the image size, resolution and orientation. The original images captured by the webcam are 1280*720 with a size ranging from 30 to 130 KB. The original images from iPhone have higher resolution, greater size, different aspect ratio and unknown orientation, depending on your pose when taking the picture. To deal with these discrepancy, in the iPhone camera App, please make sure aspect ratio is set to 16:9 instead of 4:3. I also processed iPhone images via a python script (`process_img.py`) so that they have comparable size and resolution.
 
 I used an open source software called [labelImg](https://github.com/tzutalin/labelImg) for labelling. When labelling, you need to determine what exactly is the object. I included all the non-white element on a card's surface as one single object.
 
-I ended up with around 250 pictures from each category (Ace, 2-10). 
+I ended up with around 250 pictures from each class (Ace, 2-10). J, Q and K each contains 150 images are included in the training session, but these are not used during real-time inferencing. 
 
 ## Data storage
 Here is my suggested way of storing both image and annotation data. Suppose on June 10th, 2021 I captured two images using webcam (`2021-06-10-0001.jpg`, `2021-06-10-0002.jpg`) and other two using iPhone (`IMG_100.JPG`, `IMG_1001.JPG`), then I would store them into two separate batches under `img/`. The `annotation/` directory should have exactly the same structure as `img/` does and the only difference is that it stores XML files. 
@@ -117,7 +117,7 @@ $ docker/run.sh --volume ~/my-detection:/my-detection
 ```
 Execute the following command to start solving 24 game by AI in realtime!
 ```sh
-python3 /my-detection/my-detection.py --model=./python/training/detection/ssd/models/cards/mb2-ssd-lite.onnx --labels=./python/training/detection/ssd/models/cards/labels.txt --input-blob=input_0 --output-cvg=scores --output-bbox=boxes --threshold=0.5
+# python3 /my-detection/my-detection.py --model=./python/training/detection/ssd/models/cards/mb2-ssd-lite.onnx --labels=./python/training/detection/ssd/models/cards/labels.txt --input-blob=input_0 --output-cvg=scores --output-bbox=boxes --threshold=0.5
 ```
 
 
