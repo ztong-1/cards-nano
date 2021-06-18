@@ -6,7 +6,7 @@ The purpose of this project is to build a tool using NVIDIA Jetson Nano that can
 This project contains two main part. In the first part, an objection detection tool will be built to detect and classify the cards seen by the camera. In the second part, if there are four cards detected, then an algorithm will determine if any operation exists to reach 24. The first such solution will be the output.  
 
 ## Prerequisite
-This project depends on NVIDIA Jetson as the base hardware, so I would recommend walking through the official NVIDIA Jetson [Hello AI World](https://github.com/dusty-nv/jetson-inference#api-reference) tutorial, especially the [DectNet](https://github.com/dusty-nv/jetson-inference/blob/master/docs/detectnet-console-2.md) section, in order to be comfortable with understanding the rest.
+This project depends on NVIDIA Jetson as the base hardware, so I would recommend walking through the official NVIDIA Jetson [Hello AI World](https://github.com/dusty-nv/jetson-inference#deploying-deep-learning) tutorial, especially the [DetectNet](https://github.com/dusty-nv/jetson-inference/blob/master/docs/detectnet-console-2.md) section, in order to be comfortable with understanding the rest.
 
 ## Collecting and labelling card images
 One way to collect and label card images at once is to continue using the tool covered in the Hello AI World tutorial. If you have never used that tool, I strongly suggest trying at least a couple images. However, one disadvantage is it is hard to modify the resulting `.xml` files. This makes it difficult to validate labels or to fine touch previously drawn bounding boxes. 
