@@ -42,7 +42,7 @@ cards-project/
         batch-061121a/
             2021-06-11-0001.xml
 ```
-Storing files in this way makes it easier for future data validation. It also allows me to customize which batch should be included into a particular training session. Remember that the `data/` folder in the tutorial looks like this:
+Storing files in this way makes it easier for future data validation. It also allows me to customize which batch should be included into a particular training session. I also provide an utility function (`count_img.py`) in order to count number of existing image in each class, stratified by camera type. Remember that the `data/` folder in the tutorial looks like this:
 ```
 data/cards/
     JPEGImages/
@@ -96,19 +96,19 @@ Once training is completed, you can export the model to ONNX format.
 ```
 Once again, you need to replace `n` and `xxx` with the actual value. Any normally you would pick the one with the smallest loss. The exported ONNX format model will also be in `models/`.
 
-## Realtime testing
-Before heading into 24 game, I want to make sure the detection accuracy is sufficient. If you don't have a webcam connected, you might want to connect it and restart the container. Once done, head back to `ssd/` folder and run the following code.
+## Real-time inferencing
+Before heading into 24 game, I want to make sure the detection accuracy is desirable. If you don't have a webcam connected, you might want to exit and restart the container. Once done, head back to `ssd/` folder and run the following code.
 ```sh
 # detectnet --model=models/cards/mb2-ssd-lite.onnx --labels=models/cards/labels.txt --input-blob=input_0 --output-cvg=scores --output-bbox=boxes --threshold=0.5 /dev/video0
 ```
-If the accuracy seems not acceptable, then please take more picture and re-train the model. One thing to note is that whenever a new onnx model is exported. You want to make sure that `.engine` file is also updated. It seems `detectnet` command only recontruct `.engine` file if there is none exist. Therefore, you may manually remove the old version before running `detectnet` command.
+If the accuracy seems not acceptable, then please capture more image and re-train the model. One thing to note is that whenever a new ONNX model is exported. You want to make sure that `.engine` file is also updated. It seems `detectnet` command only recontruct `.engine` file if none exists in the directory. Therefore, you have to manually remove the old `.engine` file before proceeding to `detectnet`.
 
 Detection accuracy depends on many factors, including model type, training sample size, number of epochs, precision of bounding box, picture quality, picture diversity, etc. My first attempt wasn't quite successful and the reason could be using SSD mobile-net version 1 and small sample size. The confidence of detected card were typically around 0.4 to 0.5 and some numbers can hardly be detected. After switching to SSD mobile-net version 2, the performance improved a lot. Confidence are usually above 0.85 and the model shows robustness for different card orientation. However, it still had difficulty distinguishing between 8 and 9, 5 and 6. So I increased the sample size a bit more and reached the final trained model.  
 
 ## 24 game implementation
 No machine learning knowledge is involved in implementing the 24 game. Leetcode has one problem on this game I actually started from [there](https://leetcode.com/problems/24-game/). However, the original Leetcode problem only require outputting whether the card combination has a solution or not. So I added some other features so that it outputs an actual arithmetic expression.
 
-## Combine 24 game with object detection
+## Combine 24 game with real-time object detection
 Finally, it is now time to crack the 24 game with some AI boost. In the Hello AI World tutorial, a folder called `my-detection/` was created at `Home` directory, and I will use that. Exit the current container by using the command `exit`.
 
 Start the container again, but with mounting the `my-detection/` folder.
